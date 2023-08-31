@@ -323,7 +323,7 @@ const Marketplace = () => {
                             </div>
 
                             {
-                            nftBalance == -1 ? <></> : 
+                            //nftBalance == -1 ? <></> : 
                             nftBalance > 0 ? 
                             <span className="mt-2 text-[#000000] font-bold">Claimed! You have {nftBalance} Hashcase Carbon Credit NFTs</span> : <button
                                 onClick={mintNFTToWallet}
