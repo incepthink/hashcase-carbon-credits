@@ -240,6 +240,10 @@ const Marketplace = () => {
                         <>
                             <span className="font-bold">Carbon Credits Claimed!</span>
                             <div>
+                                <span>Transaction Hash: </span> <input
+                            type={"text"}
+                            value={transactionHash}
+                        />
                                 <Link className="mr-4" href={`https://polygonscan.com/tx/${transactionHash}`}>
                                     <button
                                         className="text-[#04A6E7] bg-[#e8f6ff] rounded-[1.5rem] px-4 py-2 hover:scale-105 hover:duration-150 hover:ease-in hover:delay-150 font-poppins mt-8"
@@ -271,22 +275,12 @@ const Marketplace = () => {
                 { <div className="flex-1 flex justify-center items-center p-8">
                     <div className="flex flex-col items-start">
                         <h1 className="font-bebas text-4xl uppercase">
-                            Greenvest CC NFT
+                            Hashcase CC NFT
                         </h1>
                         <p className="text-[#667085]">
-                        This is a FREE CLAIM for the early supporters of Greenvest as we make the world greener.Each NFT represents 1kg of CO2 that has been sequestered from the environment. Together, the 1,000 NFTs make up a single carbon credit.For more details on the Carbon Credit, view the certificate at: <a href="https://drive.google.com/file/d/1RS0usksdEJSgWYJnTP3Ax8TwuyinB5wy/view" target="_blank">https://drive.google.com/file/d/1RS0usksdEJSgWYJnTP3Ax8TwuyinB5wy/view</a>
+                        This is a FREE CLAIM for the early supporters of Hashcase as we make the world greener.Each NFT represents 1kg of CO2 that has been sequestered from the environment. Together, the 1,000 NFTs make up a single carbon credit.For more details on the Carbon Credit, view the certificate at: <a href="https://drive.google.com/file/d/1RS0usksdEJSgWYJnTP3Ax8TwuyinB5wy/view" target="_blank">https://drive.google.com/file/d/1RS0usksdEJSgWYJnTP3Ax8TwuyinB5wy/view</a>
                         </p>
-                        {
-                            nftBalance == -1 ? <></> : 
-                            nftBalance > 0 ? 
-                            <span className="mt-2 text-[#04A6E7] font-bold">Claimed! You have {nftBalance} Carbon Credit NFTs</span> : <button
-                                onClick={mintNFTToWallet}
-                                className="text-white  bg-[#04A6E7] rounded-[1.5rem] px-4 py-2 hover:scale-105 duration-150 ease-in delay-150 font-poppins mt-8"
-                                style={{fontSize:"1.25rem"}}
-                            >
-                                Claim NFT
-                            </button>
-                        }
+                        
                         
                     </div>
                 </div> }
@@ -328,11 +322,23 @@ const Marketplace = () => {
                                 <img src='/images/sample_nft.png' alt="sample nft" className="md:w-[50%] w-[85%]" style={{'margin':'0 auto', borderRadius:'0.75rem'}} />
                             </div>
 
+                            {
+                            nftBalance == -1 ? <></> : 
+                            nftBalance > 0 ? 
+                            <span className="mt-2 text-[#000000] font-bold">Claimed! You have {nftBalance} Hashcase Carbon Credit NFTs</span> : <button
+                                onClick={mintNFTToWallet}
+                                className='w-full text-xl self-center bg-[#0e7490] px-2 py-4 rounded-md text-centers border-none outline-none cursor-pointer bg-white text-[#04A6E7] font-semibold mt-1 mb-1 transition delay-500 ease hover:-translate-y-2 active:translate-y-4'
+                                style={{fontSize:"1.25rem"}}
+                            >
+                                Claim NFT
+                            </button>
+                        }
+
                             
                             
 
                                 <div className="w-full flex justify-center items-center">
-                                    <button onClick={() => router.push('/apply')} className='w-full text-xl self-center bg-[#0e7490] px-2 py-4 rounded-md text-centers border-none outline-none cursor-pointer bg-white text-[#04A6E7] font-semibold mt-3 mb-3 transition delay-500 ease hover:-translate-y-2 active:translate-y-4'>
+                                    <button onClick={() => router.push('/apply')} className='w-full text-xl self-center bg-[#0e7490] px-2 py-4 rounded-md text-centers border-none outline-none cursor-pointer bg-white text-[#04A6E7] font-semibold mt-1 mb-3 transition delay-500 ease hover:-translate-y-2 active:translate-y-4'>
                                         Place Order 
                                     </button>
                                 </div>

@@ -37,14 +37,14 @@ const Footer = () => {
                 <div className='rounded-full p-4 bg-[#111C55] items-center'><LocalPhoneOutlined className='text-green-500' /></div>
                     <div className='text-xl flex flex-col mx-2'>
                         <p>Call Us</p>
-                        <p>+919986034385</p>
+                        <p>+91 98347 80832</p>
                     </div>
                 </div>
             </div>
-            <div className='flex  md:w-[40%] w-[100%] md:flex-row flex-col  md:justify-between justify-center  text-white'>
-                    <Link href='/nfts' className=' font-normal text-xl m-2' >Place Order</Link>
-                    <Link href='/privacypolicy' className='font-normal text-xl m-2' >Privacy & Policy</Link>
-                    <Link href='/disclaimer' className='font-normal text-xl m-2' >Disclaimer</Link>
+            <div className='flex  md:w-[40%] w-[100%] md:flex-row flex-col  md:center center text-white'>
+                    <Link href='/nfts' className=' font-normal text-xl m-2' >Claim NFT</Link>
+                    {/*<Link href='/privacypolicy' className='font-normal text-xl m-2' >Privacy & Policy</Link>
+                    <Link href='/disclaimer' className='font-normal text-xl m-2' >Disclaimer</Link>*/}
                     <Link href='/faq' className='font-normal text-xl m-2' >FAQs</Link>
                 
             </div>

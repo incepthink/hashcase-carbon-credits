@@ -19,7 +19,7 @@ function MobileNav({open, setOpen ,user, anchorEl, openDropdown, handleClose, ha
                     <Image
                         width={55}
                         height={55}
-                        src="/images/40813.png"
+                        src="/images/hclogo.jpg"
                         alt="website logo"
                         style={{ objectFit: "contain" }}
                     />
@@ -124,13 +124,13 @@ const Navbar = () => {
                     href="/"
                 >
                     <Image
-                        width={50}
-                        height={50}
-                        src="/images/40813.png"
+                        width={30}
+                        height={30}
+                        src="/images/hclogo.jpg"
                         alt="website logo"
                         style={{ objectFit: "contain" }}
                     />
-                    <span className="text-[#04A6E7] ayuthaya ">{" "}Hashcase Carbon Credit</span>
+                    <span className="text-[#04A6E7] ayuthaya ">{" "}  Hashcase Carbon Credit</span>
                 </Link>
             </div>
             <div className="w-9/12 flex justify-end items-center">
