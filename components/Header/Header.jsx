@@ -116,7 +116,7 @@ const customStyles = {
     },
 };
 
-const Marketplace = () => {
+const Header = () => {
     const router = useRouter();
     const token = env.HASHCASE_API_KEY;
     const { state, dispatch } = useContext(StoreContext);
@@ -266,7 +266,9 @@ const Marketplace = () => {
                     )}
                 </div>
             </Modal>
-            <div className="absolute font-poppins w-full h-screen md:bg-home-background bg-[#3addf6] bg-center  flex flex-row items-stretch bg-cover   relative overflow-hidden ">
+            <div className="absolute font-poppins w-full h-screen md:bg-home-background bg-[#3addf6] bg-center  md:flex md:flex-row
+            column 
+            items-stretch bg-cover relative overflow-hidden hidden ">
                 
                 <Head>
                     <title>Hashcase Carbon Credit&apos;s NFT</title>
@@ -287,10 +289,10 @@ const Marketplace = () => {
 
 
                 {/* nft page content */}
-                <div className=' md:min-w-[500px] md:mx-4 md:my-3 m-0 md:w-[35%] w-[100vw] flex md:bg-[#04A6E7]  rounded-md md:rounded-md items-center  overflow-hidden '>
+                <div className=' md:min-w-[500px] md:mx-4 md:my-3 m-0 md:w-[35%] w-[100vw] flex md:bg-[#04A6E7]  rounded-md md:rounded-md items-center  '>
                     
                     {/* nft page content with scroll */}
-                    <div className='w-full p-6 flex flex-col h-full overflow-x-hidden overflow-y-auto scroll-smooth hover:scroll-auto custom-scrollbar'>
+                    <div className='w-full p-6 flex flex-col    '>
 
                         {/* nft page content top */}
                         <div>
@@ -359,9 +361,14 @@ const Marketplace = () => {
                 </div>
                 
             </div>
+            <div className="absolute font-poppins w-full h-screen md:bg-home-background bg-[#3addf6] bg-center  md:flex md:flex-row
+            column 
+            items-stretch bg-cover relative overflow-hidden md:hidden  items-center justify-center text-centers">
+                <h1 className="font-bebas text-4xl uppercase">Please view on laptop!</h1>
+            </div>
         </>
     );
 };
 
-export default Marketplace;
+export default Header;
 
