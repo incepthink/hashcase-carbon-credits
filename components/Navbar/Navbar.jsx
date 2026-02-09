@@ -5,50 +5,55 @@ import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { useContext, useEffect, useState } from "react"
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 
 function MobileNav({open, setOpen ,user, anchorEl, openDropdown, handleClose, handleClick,dispatch}) {
     const router = useRouter();
     return (
-        <div className={`absolute top-0 left-0 h-screen w-screen bg-white transform ${open ? "-translate-x-0" : "-translate-x-full"} transition-transform duration-300 ease-in-out filter drop-shadow-md `}>
-            <div className="flex items-center justify-center filter drop-shadow-md bg-white h-20"> {/*logo container*/}
+        <div className={`absolute top-0 left-0 h-screen w-screen bg-gradient-to-b from-white to-gray-50 transform ${open ? "-translate-x-0" : "-translate-x-full"} transition-transform duration-300 ease-in-out shadow-2xl`}>
+            <div className="flex items-center justify-center bg-white/80 backdrop-blur-sm h-20 border-b border-gray-100">
                 <Link
-                    className="flex items-center md:text-2xl text-lg font-semibold "
+                    className="flex items-center gap-3"
                     href="/"
                 >
                     <Image
-                        width={55}
-                        height={55}
+                        width={45}
+                        height={45}
                         src="/images/hclogo.jpg"
                         alt="website logo"
+                        className="rounded-lg shadow-sm"
                         style={{ objectFit: "contain" }}
                     />
-                    <span className="text-[#04A6E7] font-ayuthaya ml-1">{" "}Hashcase Carbon Credit</span>
+                    <span className="text-lg font-poppins font-semibold text-[#0891b2]">
+                        Hashcase Carbon Credit
+                    </span>
                 </Link>
             </div>
-            <div className="flex flex-col ml-4 text-[#00337C]  text-2xl font-nunito">
-                
-                <Link 
-                    className={`my-4 ${router.pathname=='/' && 'underline underline-offset-[6px] decoration-[#00337C] decoration-2'}`} 
-                    href="/" 
+            <div className="flex flex-col px-6 pt-8 text-[#1e3a5f] text-xl font-poppins">
+
+                <Link
+                    className={`py-4 px-4 rounded-xl transition-all duration-200 ${router.pathname=='/' ? 'bg-[#04A6E7]/10 text-[#0891b2] font-semibold' : 'hover:bg-gray-100'}`}
+                    href="/"
                     onClick={() => setTimeout(() => {setOpen(!open)}, 100)}
                 >
                     REC NFTs
                 </Link>
-                <Link 
-                    className={`my-4 ${router.pathname=='/aboutus' && 'underline underline-offset-[6px] decoration-[#00337C] decoration-2 '} `} 
-                    href="/aboutus" 
+                <Link
+                    className={`py-4 px-4 rounded-xl transition-all duration-200 ${router.pathname=='/aboutus' ? 'bg-[#04A6E7]/10 text-[#0891b2] font-semibold' : 'hover:bg-gray-100'}`}
+                    href="/aboutus"
                     onClick={() => setTimeout(() => {setOpen(!open)}, 100)}
                 >
                     About Us
                 </Link>
-                <div 
-                    
-                >
+                <div className="mt-4 px-4 flex flex-col gap-3">
+                    <div className="flex justify-center">
+                        <ConnectButton showBalance={false} chainStatus="none" />
+                    </div>
                     {
                         user ?
                         <button
-                            className="my-4 bg-[#04A6E7] text-white rounded-3xl px-4 py-2"
+                            className="w-full bg-[#0891b2] text-white rounded-full px-6 py-3 font-medium shadow-lg hover:bg-[#0e7490] transition-all duration-300"
                             id="basic-button"
                             aria-controls={openDropdown ? 'basic-menu' : undefined}
                             aria-haspopup="true"
@@ -57,11 +62,17 @@ function MobileNav({open, setOpen ,user, anchorEl, openDropdown, handleClose, ha
                         >
                             My Account
                         </button>
-                        :<Link onClick={()=>{setTimeout(()=>{setOpen(!open)},100) }} href='/signin'className="my-4 bg-[#04A6E7] text-white rounded-3xl px-4 py-2">Sign In</Link>
+                        :<Link
+                            onClick={()=>{setTimeout(()=>{setOpen(!open)},100)}}
+                            href='/signin'
+                            className="block text-center w-full bg-[#0891b2] text-white rounded-full px-6 py-3 font-medium shadow-lg hover:bg-[#0e7490] transition-all duration-300"
+                        >
+                            Sign In
+                        </Link>
                     }
-                    
+
                 </div>
-            </div>  
+            </div>
         </div>
     )
 }
@@ -107,67 +118,78 @@ const Navbar = () => {
         };
 
     return (
-        <nav className="relative z-50 flex filter drop-shadow-md bg-white px-4 py-4 h-20 justify-center items-center">
-            <MobileNav 
-                open={open} 
-                setOpen={setOpen} 
-                user={state.user} 
-                handleClick={handleClick} 
-                handleClose={handleClose} 
-                openDropdown={openDropdown} 
-                anchorEl={anchorEl} 
+        <nav className="relative z-50 flex bg-white/95 backdrop-blur-md px-6 lg:px-12 py-3 h-[72px] justify-between items-center border-b border-gray-100 shadow-sm">
+            <MobileNav
+                open={open}
+                setOpen={setOpen}
+                user={state.user}
+                handleClick={handleClick}
+                handleClose={handleClose}
+                openDropdown={openDropdown}
+                anchorEl={anchorEl}
                 dispatch={dispatch}
             />
-            <div className="md:w-3/12 w-1/2 flex items-center">
+            <div className="flex items-center">
                 <Link
-                    className="flex items-center text-2xl font-semibold "
+                    className="flex items-center gap-3 group"
                     href="/"
                 >
-                    <Image
-                        width={30}
-                        height={30}
-                        src="/images/hclogo.jpg"
-                        alt="website logo"
-                        style={{ objectFit: "contain" }}
-                    />
-                    <span className="text-[#04A6E7] ayuthaya ">{" "}  Hashcase Carbon Credit</span>
+                    <div className="relative">
+                        <Image
+                            width={40}
+                            height={40}
+                            src="/images/hclogo.jpg"
+                            alt="website logo"
+                            className="rounded-lg shadow-sm group-hover:shadow-md transition-shadow duration-300"
+                            style={{ objectFit: "contain" }}
+                        />
+                    </div>
+                    <div className="flex flex-col">
+                        <span className="text-xl font-poppins font-bold text-[#0891b2] leading-tight">
+                            Hashcase
+                        </span>
+                        <span className="text-xs font-poppins font-medium text-gray-500 tracking-wide">
+                            Carbon Credit
+                        </span>
+                    </div>
                 </Link>
             </div>
-            <div className="w-9/12 flex justify-end items-center">
+            <div className="flex items-center gap-2">
 
-                <div className="z-50 flex relative w-8 h-8 flex-col justify-between items-center md:hidden" onClick={() => {
+                <div className="z-50 flex relative w-8 h-8 flex-col justify-between items-center md:hidden cursor-pointer" onClick={() => {
                     setOpen(!open)
                 }}>
-                    {/* hamburger button */}
-                    <span className={`h-1 w-full bg-black rounded-lg transform transition duration-300 ease-in-out ${open ? "rotate-45 translate-y-3.5" : ""}`} />
-                    <span className={`h-1 w-full bg-black rounded-lg transition-all duration-300 ease-in-out ${open ? "w-0" : "w-full"}`} />
-                    <span className={`h-1 w-full bg-black rounded-lg transform transition duration-300 ease-in-out ${open ? "-rotate-45 -translate-y-3.5" : ""}`} />
+                    <span className={`h-[3px] w-full bg-[#0891b2] rounded-full transform transition duration-300 ease-in-out ${open ? "rotate-45 translate-y-[10px]" : ""}`} />
+                    <span className={`h-[3px] w-full bg-[#0891b2] rounded-full transition-all duration-300 ease-in-out ${open ? "opacity-0" : "opacity-100"}`} />
+                    <span className={`h-[3px] w-full bg-[#0891b2] rounded-full transform transition duration-300 ease-in-out ${open ? "-rotate-45 -translate-y-[10px]" : ""}`} />
                 </div>
 
-                <div className="hidden md:flex justify-center items-center text-[#00337C] text-lg font-nunito ">
-                    <Link 
-                        href="/" 
-                        className={`mx-4 hover:scale-105 duration-150 items-center justify-center ease-in delay-150 ${router.pathname=='/' && 'underline underline-offset-[6px] decoration-[#00337C] decoration-2'} `}
+                <div className="hidden md:flex items-center gap-1">
+                    <Link
+                        href="/"
+                        className={`px-5 py-2.5 rounded-full font-poppins font-medium text-[15px] transition-all duration-300
+                            ${router.pathname=='/'
+                                ? 'bg-[#04A6E7]/10 text-[#0891b2]'
+                                : 'text-[#1e3a5f] hover:bg-gray-100'
+                            }`}
                     >
                         REC NFTs
                     </Link>
-                    <Link 
-                        href="/aboutus" 
-                        className={`mx-4 hover:scale-105 duration-150 ease-in delay-150 ${router.pathname=='/aboutus' && 'underline underline-offset-[6px] decoration-[#00337C] decoration-2'} `}
+                    <Link
+                        href="/aboutus"
+                        className={`px-5 py-2.5 rounded-full font-poppins font-medium text-[15px] transition-all duration-300
+                            ${router.pathname=='/aboutus'
+                                ? 'bg-[#04A6E7]/10 text-[#0891b2]'
+                                : 'text-[#1e3a5f] hover:bg-gray-100'
+                            }`}
                     >
                         About Us
                     </Link>
                     {
-                    state.user ? 
-                    <div className="hidden md:flex text-lg justify-center font-nunito items-center">
-                        {/* <button 
-                            onClick={() => {logoutHandler(dispatch)}}
-                            className="mx-4 text-white bg-[#04A6E7] rounded-[1.5rem] px-4 py-2 hover:scale-105 hover:duration-150 hover:ease-in hover:delay-150"
-                            >
-                                Log out
-                        </button> */}
+                    state.user ?
+                    <div className="flex items-center ml-2">
                         <button
-                            className="mx-4 text-white bg-[#04A6E7] rounded-[1.5rem] px-4 py-2 hover:scale-105 hover:duration-150 hover:ease-in hover:delay-150"
+                            className="bg-[#0891b2] text-white rounded-full px-6 py-2.5 font-poppins font-medium text-[15px] shadow-md hover:bg-[#0e7490] hover:scale-[1.02] transition-all duration-300"
                             id="basic-button"
                             aria-controls={openDropdown ? 'basic-menu' : undefined}
                             aria-haspopup="true"
@@ -185,24 +207,32 @@ const Navbar = () => {
                             'aria-labelledby': 'basic-button',
                             }}
                             className="mt-2"
+                            PaperProps={{
+                                sx: {
+                                    borderRadius: '12px',
+                                    boxShadow: '0 10px 40px rgba(0,0,0,0.1)',
+                                    mt: 1.5,
+                                }
+                            }}
                         >
-                            <Link 
-                                href="/myWallet" 
+                            <Link
+                                href="/myWallet"
                             >
-                                <MenuItem onClick={handleClose}>My Wallet</MenuItem>
+                                <MenuItem onClick={handleClose} sx={{ fontFamily: 'Poppins', py: 1.5, px: 3 }}>My Wallet</MenuItem>
                             </Link>
-                            
-                            <MenuItem onClick={() => {logoutHandler(dispatch)}}>Logout</MenuItem>
+
+                            <MenuItem onClick={() => {logoutHandler(dispatch)}} sx={{ fontFamily: 'Poppins', py: 1.5, px: 3 }}>Logout</MenuItem>
                         </Menu>
                     </div>
-                    : <div className="hidden md:flex text-lg font-nunito items-center">
-                    <Link 
-                        href='/signin'
-                        className="mx-4 text-white bg-[#04A6E7] rounded-[1.5rem] px-4 py-2 hover:scale-105 hover:duration-150 hover:ease-in hover:delay-150"
-                    >
-                        Sign In
-                    </Link>
-                </div>  
+                    : <div className="flex items-center ml-2 gap-3">
+                        <ConnectButton showBalance={false} chainStatus="none" />
+                        <Link
+                            href='/signin'
+                            className="bg-[#0891b2] text-white rounded-full px-6 py-2.5 font-poppins font-medium text-[15px] shadow-md hover:bg-[#0e7490] hover:scale-[1.02] transition-all duration-300"
+                        >
+                            Sign In
+                        </Link>
+                    </div>
                 }
                 </div>
             </div>

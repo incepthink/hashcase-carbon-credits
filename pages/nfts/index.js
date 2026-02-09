@@ -7,6 +7,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
+import { useAccount } from "wagmi";
 import Modal from "react-modal";
 import { PropagateLoader } from "react-spinners";
 import { toast } from "react-toastify";
@@ -37,24 +38,21 @@ const Marketplace = () => {
     const [isLoadingModalOpen, setIsLoadingModalOpen] = useState(false);
     const [accountAddress, setAccountAddress] = useState("");
     const [nftBalance, setNftBalance] = useState(-1);
-    
+    const { address: wagmiAddress } = useAccount();
+
+    const getWalletAddress = () => {
+        return state?.user?.magic_wallet || state?.user?.wallet_address || wagmiAddress || null;
+    };
+
     useEffect(() => {
-        console.log(state.user);
+        console.log("state.user:", state.user, "wagmiAddress:", wagmiAddress);
         checkNFTBalanceForUser();
-    }, [state.user]);
+    }, [state.user, wagmiAddress]);
 
     const checkNFTBalanceForUser = async () => {
-        let wallet_address;
-        
-        if(state?.user?.magic_wallet){
-            wallet_address = state.user.magic_wallet;
-            setAccountAddress(state.user.magic_wallet);
-        }else if(state?.user?.wallet_address){
-            wallet_address = state.user.wallet_address;
-            setAccountAddress(state.user.wallet_address);
-        }else{
-            return;
-        }
+        const wallet_address = getWalletAddress();
+        if(!wallet_address) return;
+        setAccountAddress(wallet_address);
 
         try{
             const config = {
@@ -86,40 +84,32 @@ const Marketplace = () => {
     };
 
     const mintNFTToWallet = async () => {
-        let wallet_address;
-        
-        if(state?.user?.magic_wallet){
-            wallet_address = state.user.magic_wallet;
-            setAccountAddress(state.user.magic_wallet);
-        }else if(state?.user?.wallet_address){
-            wallet_address = state.user.wallet_address;
-            setAccountAddress(state.user.wallet_address);
-        }else{
+        const wallet_address = getWalletAddress();
+        console.log("mintNFTToWallet wallet_address:", wallet_address, "wagmiAddress:", wagmiAddress);
+        if(!wallet_address){
             router.push('/signin')
             return;
         }
+        setAccountAddress(wallet_address);
         openLoadingModal();
 
         try{
             const bodyParameters = {
-                wallet_address: `${wallet_address}`,
-                collection_id: 2,
-                token_id: 6
+                collection_id: 226,
+                name: "Greenvest CC NFT",
+                description: "This is a FREE CLAIM for the early supporters of Greenvest as we make the world greener.",
+                image_url: "https://metadata-hashcase-admin.s3.us-east-2.amazonaws.com/nft-images/1770376182099-sample_nft.png",
+                attributes: [],
+                recipient: wallet_address,
+                amount: 1,
+                metadata_id: 53,
             };
-        
-            const config = {
-                headers: {
-                  "Content-Type": "application/json",
-                },
-            };
-        
-            axios.defaults.headers.common = {
-                "x-api-key": token,
-            };
-            const res = await axios.post("https://api.hashcase.co/dev/mintNFTtoAccount", bodyParameters, config);
+
+            const res = await axios.post("https://api.hashcase.co/platform/mint-nft", bodyParameters);
             console.log(res.data);
-            if(res.data.transactionHash != ""){
-                setTransactionHash(res.data.transactionHash);
+            const { data } = res.data;
+            if(data){
+                setTransactionHash(data.transactionHash || "claimed");
                 checkNFTBalanceForUser();
             }else{
                 toast.error("Error occurred, try later!");

@@ -16,9 +16,11 @@ const Singin = () => {
 
     const googleLoginHandler = async (e) => {
         e.preventDefault();
+        // Store the redirect destination before OAuth flow
+        sessionStorage.setItem('authRedirectLink', '/');
         const idToken = await state.magic.oauth.loginWithRedirect({
             provider: "google",
-            redirectURI: `${env.NEXT_PUBLIC_URL}/redirect?link=/`,
+            redirectURI: `${env.NEXT_PUBLIC_URL}/redirect`,
         });
         console.log(idToken);
     };

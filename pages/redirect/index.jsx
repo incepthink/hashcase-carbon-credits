@@ -1,25 +1,60 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useRouter } from "next/router";
-/* eslint-disable react-hooks/rules-of-hooks */
 import { useContext, useEffect, useState } from "react";
 import { StoreContext } from "../../utils/Store";
 import { magicLogin } from "../../utils/user";
 import { notifyPromise, notifyResolve } from "../../utils/notify";
 import { BeatLoader } from "react-spinners";
 
+// Module-level flags to prevent duplicate calls across StrictMode remounts
+let isProcessing = false;
+let hasLoggedIn = false;
 
-const redirect = ({ link }) => {
+const Redirect = () => {
     const { state, dispatch } = useContext(StoreContext)
     const router = useRouter();
     const [userInfo, setUserInfo] = useState(null);
     const [did, setDid] = useState(null);
+    const [link, setLink] = useState('/');
+    const [isRedirecting, setIsRedirecting] = useState(false);
 
+    // Reset flags when component mounts fresh (not StrictMode remount)
+    useEffect(() => {
+        return () => {
+            // Reset on unmount so next navigation works
+            isProcessing = false;
+            hasLoggedIn = false;
+        };
+    }, []);
+
+    useEffect(() => {
+        // Get redirect destination from sessionStorage
+        const storedLink = sessionStorage.getItem('authRedirectLink') || '/';
+        setLink(storedLink);
+        sessionStorage.removeItem('authRedirectLink');
+    }, []);
 
     useEffect(() => {
         const getRedirectResult = async () => {
+            // Prevent duplicate calls (React StrictMode)
+            if (isProcessing) return;
+            isProcessing = true;
+
             console.log('getting redirect')
             const notifyId = notifyPromise('Verifying Credentials...', 'info');
             try {
+                // Check if user is already logged in
+                const isLoggedIn = await state.magic.user.isLoggedIn();
+                if (isLoggedIn) {
+                    console.log('User already logged in, getting token directly');
+                    const idToken = await state.magic.user.getIdToken();
+                    const metadata = await state.magic.user.getMetadata();
+                    notifyResolve(notifyId, 'Credentials Verified', 'success');
+                    setUserInfo(metadata);
+                    setDid(idToken);
+                    return;
+                }
+
                 const result = await state.magic.oauth.getRedirectResult();
                 console.log(result)
                 const idToken = await state.magic.user.getIdToken();
@@ -28,7 +63,9 @@ const redirect = ({ link }) => {
                 setDid(idToken);
             } catch (error) {
                 console.log(error)
+                isProcessing = false;
                 notifyResolve(notifyId, 'Error verifying credentials', 'error');
+                router.push('/signin');
             }
         }
         if (!state.magic) return;
@@ -36,18 +73,25 @@ const redirect = ({ link }) => {
     }, [state.magic])
 
     useEffect(() => {
-        login()
-    }, [did])
+        const login = async () => {
+            // Wait for both did and userInfo, and prevent duplicate login
+            if (!did || !userInfo || hasLoggedIn) return;
+            hasLoggedIn = true;
 
-    const login = async () => {
-        if (!did) return;
-        const loginSuccess = await magicLogin(state, dispatch, did, userInfo);
-        if (loginSuccess) {
-            router.push(`${link}`)
-        } else {
-            console.log('login failed')
-            router.push(`${link}`)
+            const loginSuccess = await magicLogin(state, dispatch, did, userInfo);
+            setIsRedirecting(true);
+            if (loginSuccess) {
+                router.push(link)
+            } else {
+                console.log('login failed')
+                router.push(link)
+            }
         }
+        login()
+    }, [did, userInfo, link, state, dispatch, router])
+
+    if (isRedirecting) {
+        return null;
     }
 
     return (
@@ -58,16 +102,4 @@ const redirect = ({ link }) => {
     )
 }
 
-export default redirect
-
-export async function getServerSideProps(context) {
-    console.log(context)
-    const {link} = context.query;
-    console.log(link)
-
-    return {
-        props: {
-            link,
-        },
-    };
-}
+export default Redirect
