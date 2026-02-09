@@ -51,7 +51,7 @@ function MobileNav({open, setOpen ,user, anchorEl, openDropdown, handleClose, ha
                         <ConnectButton showBalance={false} chainStatus="none" />
                     </div>
                     {
-                        user ?
+                        user &&
                         <button
                             className="w-full bg-[#0891b2] text-white rounded-full px-6 py-3 font-medium shadow-lg hover:bg-[#0e7490] transition-all duration-300"
                             id="basic-button"
@@ -62,13 +62,13 @@ function MobileNav({open, setOpen ,user, anchorEl, openDropdown, handleClose, ha
                         >
                             My Account
                         </button>
-                        :<Link
-                            onClick={()=>{setTimeout(()=>{setOpen(!open)},100)}}
-                            href='/signin'
-                            className="block text-center w-full bg-[#0891b2] text-white rounded-full px-6 py-3 font-medium shadow-lg hover:bg-[#0e7490] transition-all duration-300"
-                        >
-                            Sign In
-                        </Link>
+                        // :<Link
+                        //     onClick={()=>{setTimeout(()=>{setOpen(!open)},100)}}
+                        //     href='/signin'
+                        //     className="block text-center w-full bg-[#0891b2] text-white rounded-full px-6 py-3 font-medium shadow-lg hover:bg-[#0e7490] transition-all duration-300"
+                        // >
+                        //     Sign In
+                        // </Link>
                     }
 
                 </div>
