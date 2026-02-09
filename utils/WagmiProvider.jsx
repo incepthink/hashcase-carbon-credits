@@ -10,7 +10,7 @@ const config = getDefaultConfig({
     appName: 'Hashcase Carbon Credit',
     projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID || 'YOUR_PROJECT_ID',
     chains: [polygon],
-    ssr: true,
+    ssr: false,
 });
 
 const queryClient = new QueryClient();

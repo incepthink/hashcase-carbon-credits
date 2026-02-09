@@ -269,10 +269,10 @@ const Header = () => {
                         <h1 className="font-bebas text-4xl uppercase">
                             Hashcase CC NFT
                         </h1>
-                        <p className="text-[#667085]">
-                        This is a FREE CLAIM for the early supporters of Hashcase as we make the world greener.Each NFT represents 1kg of CO2 that has been sequestered from the environment. Together, the 1,000 NFTs make up a single carbon credit.For more details on the Carbon Credit, view the certificate at: <a href="https://drive.google.com/file/d/1RS0usksdEJSgWYJnTP3Ax8TwuyinB5wy/view" target="_blank">https://drive.google.com/file/d/1RS0usksdEJSgWYJnTP3Ax8TwuyinB5wy/view</a>
+                        <p className="text-[#667085] text-justify max-w-3xl mt-2">
+                        This is a FREE CLAIM for the early supporters of Hashcase as we make the world greener. Each NFT represents 1kg of CO2 that has been sequestered from the environment. Together, the 1,000 NFTs make up a single carbon credit. For more details on the Carbon Credit, view the certificate at:
                         </p>
-                        
+                        <a className="text-blue-600 underline mt-2" href="https://drive.google.com/file/d/1RS0usksdEJSgWYJnTP3Ax8TwuyinB5wy/view" target="_blank">https://drive.google.com/file/d/1RS0usksdEJSgWYJnTP3Ax8TwuyinB5wy/view</a>
                         
                     </div>
                 </div> }
@@ -292,7 +292,7 @@ const Header = () => {
                             {/* information content */}
                             <div className='w-full flex flex-col font-poppins'>
                                 {/* NFT NAME */}
-                                <span className='text-xl text-white font-semibold '>Name of NFT</span>
+                                <span className='text-xl text-white font-semibold mb-1'>Name of NFT:</span>
                                 <span
                                     className='bg-[#68CAF1] p-3 text-xl text-white font-bold rounded-xl border-[#E3E3E3] border-solid border-[2px] flex  items-center'
                                 >
@@ -303,7 +303,7 @@ const Header = () => {
 
                             <div className='w-full flex flex-col font-poppins '>
                                 {/* NFT NAME */}
-                                <span className='text-xl text-white font-semibold my-2'>Description</span>
+                                <span className='text-xl text-white font-semibold mb-1 mt-4'>Description:</span>
                                 <span
                                     className='bg-[#68CAF1] p-4 text-xl text-white font-bold rounded-xl border-[#E3E3E3] border-solid border-[2px] flex flex-col items-start'
                                 > 
@@ -337,7 +337,7 @@ const Header = () => {
 
                                 {/* credits corner */}
                             <Link href='https://www.hashcase.co'>
-                                <div className='md:w-[60%] w-[80%] mx-auto self-center bg-[#0e7490] p-2 rounded-full text-white border-2 border-[#3e4eaa98] border-solid flex justify-center items-center cursor-pointer'>
+                                <div className='mt-2 md:w-[60%] w-[80%] mx-auto self-center bg-[#0e7490] p-2 rounded-full text-white border-2 border-[#3e4eaa98] border-solid flex justify-center items-center cursor-pointer'>
                                     Powered by {" "} 
                                     <img className='h-5 ml-2 text-white' src='/images/hashcaselogo.png' alt='hashcase logo' />
                                 </div>

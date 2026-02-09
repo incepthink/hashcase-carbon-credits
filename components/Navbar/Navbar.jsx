@@ -28,7 +28,7 @@ function MobileNav({open, setOpen ,user, anchorEl, openDropdown, handleClose, ha
                         style={{ objectFit: "contain" }}
                     />
                     <span className="text-lg font-poppins font-semibold text-[#0891b2]">
-                        Hashcase Carbon Credit
+                        HASHCASE Carbon Credit
                     </span>
                 </Link>
             </div>
@@ -50,7 +50,19 @@ function MobileNav({open, setOpen ,user, anchorEl, openDropdown, handleClose, ha
                 </Link>
                 <div className="mt-4 px-4 flex flex-col gap-3">
                     <div className="flex justify-center">
-                        <ConnectButton showBalance={false} chainStatus="none" />
+                        <ConnectButton.Custom>
+                            {({ account, chain, openConnectModal, openAccountModal, mounted }) => {
+                                const connected = mounted && account && chain;
+                                return (
+                                    <button
+                                        onClick={connected ? openAccountModal : openConnectModal}
+                                        className="w-full bg-[#0891b2] text-white rounded-full px-6 py-3 font-poppins font-medium shadow-lg hover:bg-[#0e7490] transition-all duration-300"
+                                    >
+                                        {connected ? account.displayName : 'Connect Wallet'}
+                                    </button>
+                                );
+                            }}
+                        </ConnectButton.Custom>
                     </div>
                     {
                         user &&
@@ -142,8 +154,8 @@ const Navbar = () => {
                 >
                     <div className="relative">
                         <Image
-                            width={40}
-                            height={40}
+                            width={50}
+                            height={50}
                             src="/images/hclogo.jpg"
                             alt="website logo"
                             className="rounded-lg shadow-sm group-hover:shadow-md transition-shadow duration-300"
@@ -151,8 +163,8 @@ const Navbar = () => {
                         />
                     </div>
                     <div className="flex flex-col">
-                        <span className="text-xl font-poppins font-bold text-[#0891b2] leading-tight">
-                            Hashcase
+                        <span className="text-xl font-poppins font-bold leading-tight">
+                            HashCase
                         </span>
                         <span className="text-xs font-poppins font-medium text-gray-500 tracking-wide">
                             Carbon Credit
@@ -231,13 +243,25 @@ const Navbar = () => {
                         </Menu>
                     </div>
                     : <div className="flex items-center ml-2 gap-3">
-                        <ConnectButton showBalance={false} chainStatus="none" />
-                        <Link
+                        <ConnectButton.Custom>
+                            {({ account, chain, openConnectModal, openAccountModal, mounted }) => {
+                                const connected = mounted && account && chain;
+                                return (
+                                    <button
+                                        onClick={connected ? openAccountModal : openConnectModal}
+                                        className="bg-[#0891b2] text-white rounded-full px-6 py-2.5 font-poppins font-medium text-[15px] shadow-md hover:bg-[#0e7490] hover:scale-[1.02] transition-all duration-300"
+                                    >
+                                        {connected ? account.displayName : 'Connect Wallet'}
+                                    </button>
+                                );
+                            }}
+                        </ConnectButton.Custom>
+                        {/* <Link
                             href='/signin'
                             className="bg-[#0891b2] text-white rounded-full px-6 py-2.5 font-poppins font-medium text-[15px] shadow-md hover:bg-[#0e7490] hover:scale-[1.02] transition-all duration-300"
                         >
                             Sign In
-                        </Link>
+                        </Link> */}
                     </div>
                 }
                 </div>
