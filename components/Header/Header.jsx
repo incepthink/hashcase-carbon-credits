@@ -8,19 +8,19 @@ const Header = () => {
     const { state, dispatch } = useContext(StoreContext);
 
     return (
-        <div className="max-w-screen md:h-[80%] h-[100%] bg-[#04a6e71a] md:rounded-bl-[163px] rounded-bl-[80px]">
-            <div className="flex flex-col md:flex-row justify-around items-center">
-                <div className="md:w-[60%] w-[100%] my-4 md:px-24 px-8 font-bold md:py-16 flex-col font-poppins ">
-                    <h1 className="md:text-7xl text-5xl flex text-[#04A6E7] items-center">
+        <div className="max-w-screen min-[880px]:h-[80%] h-[100%] bg-[#04a6e71a] min-[880px]:rounded-bl-[163px] rounded-bl-[80px]">
+            <div className="flex flex-col min-[880px]:flex-row justify-around items-center">
+                <div className="min-[880px]:w-[60%] w-[100%] my-4 min-[880px]:px-24 px-8 font-bold min-[880px]:py-16 flex-col font-poppins ">
+                    <h1 className="min-[880px]:text-7xl text-5xl flex text-[#04A6E7] items-center">
                         tok-e-re
                     </h1>
-                    <h1 className="md:text-4xl text-2xl  items-center">
-                        Switch to <span className="text-green-500">green energy</span> made Affordable, Simple & Quick 
+                    <h1 className="min-[880px]:text-4xl text-2xl  items-center">
+                        Switch to <span className="text-green-500">green energy</span> made Affordable, Simple & Quick
                     </h1>
-                    <h1 className="text-base md:text-xl md:my-4 items-center normal-case text-gray-500 font-poppins">
+                    <h1 className="text-base min-[880px]:text-xl min-[880px]:my-4 items-center normal-case text-gray-500 font-poppins">
                     Fractionalized & Tokenised Renewable Energy Certificates
                     </h1>
-                    <div className="flex my-12 items-center font-poppins normal-case hidden md:flex">
+                    <div className="flex my-12 items-center font-poppins normal-case hidden min-[880px]:flex">
                         <Link
                                 href="/apply"
                                 className="text-white  bg-[#04A6E7] rounded-[1.5rem] px-4 py-2 hover:scale-105 hover:duration-150 hover:ease-in hover:delay-150 font-poppins"
@@ -44,8 +44,8 @@ const Header = () => {
  /*                   </div>
                 </div>
 
-                <div className="w-[90%] md:my-0 my-4 md:w-[40%]  justify-center items-center">
-                
+                <div className="w-[90%] min-[880px]:my-0 my-4 min-[880px]:w-[40%]  justify-center items-center">
+
                     <Image
                         src="/images/40813.png"
                         alt="Globe"
@@ -53,10 +53,10 @@ const Header = () => {
                         height={450}
                         style={{ objectFit: "contain", margin:'0 auto' }}
                     />
-                
+
                 </div>
 
-                <div className="flex items-center font-poppins normal-case mb-4 md:hidden">
+                <div className="flex items-center font-poppins normal-case mb-4 min-[880px]:hidden">
                     <Link
                         href="/apply"
                         className="text-white  bg-[#04A6E7] rounded-[1.5rem] px-4 py-2 hover:scale-105 hover:duration-150 hover:ease-in hover:delay-150 font-poppins"
@@ -98,6 +98,7 @@ import Modal from "react-modal";
 import { PropagateLoader } from "react-spinners";
 import { toast } from "react-toastify";
 import { useAccount } from "wagmi";
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 const customStyles = {
     content: {
@@ -147,7 +148,7 @@ const Header = () => {
                   "Content-Type": "application/json",
                 },
             };
-        
+
             axios.defaults.headers.common = {
                 "x-api-key": token,
             };
@@ -158,7 +159,7 @@ const Header = () => {
             console.log(e);
             setNftBalance(0);
         }
-        
+
     }
 
     const openLoadingModal = () => {
@@ -211,7 +212,7 @@ const Header = () => {
 
     return (
         <>
-            
+
             <Modal
                 isOpen={isLoadingModalOpen}
                 onRequestClose={closeLoadingModal}
@@ -228,137 +229,127 @@ const Header = () => {
                         </>
                     ) : (
                         <>
-                            <span className="font-bold">Carbon Credits Claimed!</span>
-                            <div>
-                                <span>Transaction Hash: </span> <input
-                            type={"text"}
-                            value={transactionHash}
-                        />
-                                <Link className="mr-4" href={`https://polygonscan.com/tx/${transactionHash}`}>
-                                    <button
-                                        className="text-[#04A6E7] bg-[#e8f6ff] rounded-[1.5rem] px-4 py-2 hover:scale-105 hover:duration-150 hover:ease-in hover:delay-150 font-poppins mt-8"
-                                        style={{fontSize:"1.25rem"}}
-                                    >
-                                        Verify
-                                    </button>
-                                </Link>
+                            <span className="font-bold font-poppins text-2xl">Carbon Credits Claimed!</span>
+                            <div className="flex flex-col items-center mt-4">
+                                <a
+                                    href={`https://polygonscan.com/tx/${transactionHash}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-blue-600 underline break-all text-sm mt-2"
+                                >
+                                    {`https://polygonscan.com/tx/${transactionHash}`}
+                                </a>
                                 <Link href={`/myWallet`}>
                                     <button
-                                        className="text-white  bg-[#04A6E7] rounded-[1.5rem] px-4 py-2 hover:scale-105 hover:duration-150 hover:ease-in hover:delay-150 font-poppins mt-8"
+                                        className="text-white bg-[#04A6E7] rounded-[1.5rem] px-4 py-2 hover:scale-105 hover:duration-150 hover:ease-in hover:delay-150 font-poppins mt-8"
                                         style={{fontSize:"1.25rem"}}
                                     >
                                         View NFT
                                     </button>
                                 </Link>
-
                             </div>
                         </>
                     )}
                 </div>
             </Modal>
-            <div className="absolute font-poppins w-full h-screen md:bg-home-background bg-[#3addf6] bg-center  md:flex md:flex-row
-            column 
-            items-stretch bg-cover relative overflow-hidden hidden ">
-                
+            <div className="font-poppins w-full min-h-screen bg-home-background bg-center flex flex-col min-[880px]:flex-row items-stretch bg-cover relative overflow-auto">
+
                 <Head>
                     <title>Hashcase Carbon Credit&apos;s NFT</title>
                 </Head>
 
-                { <div className="flex-1 flex justify-center items-center p-8">
+                <div className="flex-1 flex justify-center items-center p-4 min-[880px]:p-8">
                     <div className="flex flex-col items-start">
-                        <h1 className="font-bebas text-4xl uppercase">
+                        <h1 className="font-bebas text-3xl min-[880px]:text-4xl uppercase">
                             Hashcase CC NFT
                         </h1>
-                        <p className="text-[#667085] text-justify max-w-3xl mt-2">
+                        <p className="text-[#667085] text-justify max-w-3xl mt-2 text-sm min-[880px]:text-base">
                         This is a FREE CLAIM for the early supporters of Hashcase as we make the world greener. Each NFT represents 1kg of CO2 that has been sequestered from the environment. Together, the 1,000 NFTs make up a single carbon credit. For more details on the Carbon Credit, view the certificate at:
                         </p>
-                        <a className="text-blue-600 underline mt-2" href="https://drive.google.com/file/d/1RS0usksdEJSgWYJnTP3Ax8TwuyinB5wy/view" target="_blank">https://drive.google.com/file/d/1RS0usksdEJSgWYJnTP3Ax8TwuyinB5wy/view</a>
-                        
+                        <a className="text-blue-600 underline mt-2 text-sm min-[880px]:text-base break-all" href="https://drive.google.com/file/d/1RS0usksdEJSgWYJnTP3Ax8TwuyinB5wy/view" target="_blank">https://drive.google.com/file/d/1RS0usksdEJSgWYJnTP3Ax8TwuyinB5wy/view</a>
+
                     </div>
-                </div> }
+                </div>
 
 
                 {/* nft page content */}
-                <div className=' md:min-w-[500px] md:mx-4 md:my-3 m-0 md:w-[35%] w-[100vw] flex md:bg-[#04A6E7]  rounded-md md:rounded-md items-center  '>
-                    
+                <div className='min-[880px]:min-w-[500px] min-[880px]:mx-4 my-4 min-[880px]:w-[35%] w-full flex bg-[#04A6E7] rounded-md items-center'>
+
                     {/* nft page content with scroll */}
-                    <div className='w-full p-6 flex flex-col    '>
+                    <div className='w-full px-4 min-[880px]:px-6 py-4 min-[880px]:py-0 flex flex-col'>
 
                         {/* nft page content top */}
                         <div>
-                            
-                            
-                            
+
                             {/* information content */}
                             <div className='w-full flex flex-col font-poppins'>
                                 {/* NFT NAME */}
-                                <span className='text-xl text-white font-semibold mb-1'>Name of NFT:</span>
+                                <span className='text-lg min-[880px]:text-xl text-white font-semibold mb-1'>Name of NFT:</span>
                                 <span
-                                    className='bg-[#68CAF1] p-3 text-xl text-white font-bold rounded-xl border-[#E3E3E3] border-solid border-[2px] flex  items-center'
+                                    className='bg-[#68CAF1] p-3 text-base min-[880px]:text-xl text-white font-bold rounded-xl border-[#E3E3E3] border-solid border-[2px] flex items-center'
                                 >
                                     Hashcase Carbon Credit TREE&nbsp;&nbsp;<Image src='/images/sample_nft.png' alt="sample nft" width={40} height={40} style={{objectFit:'contain'}}/>
                                 </span>
                             </div>
 
 
-                            <div className='w-full flex flex-col font-poppins '>
-                                {/* NFT NAME */}
-                                <span className='text-xl text-white font-semibold mb-1 mt-4'>Description:</span>
+                            <div className='w-full flex flex-col font-poppins'>
+                                <span className='text-lg min-[880px]:text-xl text-white font-semibold mb-1 mt-4'>Description:</span>
                                 <span
-                                    className='bg-[#68CAF1] p-4 text-xl text-white font-bold rounded-xl border-[#E3E3E3] border-solid border-[2px] flex flex-col items-start'
-                                > 
+                                    className='bg-[#68CAF1] p-3 min-[880px]:p-4 text-base min-[880px]:text-xl text-white font-bold rounded-xl border-[#E3E3E3] border-solid border-[2px] flex flex-col items-start'
+                                >
                                     1 REC NFT  = 1kWh (Unit of power)
                                 </span>
-                            </div>    
-                            <div className="w-full flex flex-col my-4 ">
-                                <img src='/images/sample_nft.png' alt="sample nft" className="md:w-[50%] w-[85%]" style={{'margin':'0 auto', borderRadius:'0.75rem'}} />
+                            </div>
+                            <div className="w-full flex flex-col my-4">
+                                <img src='/images/sample_nft.png' alt="sample nft" className="w-[70%] min-[880px]:w-[50%]" style={{'margin':'0 auto', borderRadius:'0.75rem'}} />
                             </div>
 
                             {
-                            //nftBalance == -1 ? <></> : 
-                            nftBalance > 0 ? 
-                            <span className="mt-2 text-[#000000] font-bold">Claimed! You have {nftBalance} Hashcase Carbon Credit NFTs</span> : <button
+                            !getWalletAddress() ? (
+                                <ConnectButton.Custom>
+                                    {({ account, chain, openConnectModal, mounted }) => {
+                                        const connected = mounted && account && chain;
+                                        if (connected) return null;
+                                        return (
+                                            <button
+                                                onClick={openConnectModal}
+                                                className='w-full text-lg min-[880px]:text-xl self-center bg-[#0e7490] px-2 py-3 min-[880px]:py-4 rounded-md text-centers border-none outline-none cursor-pointer bg-white text-[#04A6E7] font-semibold mt-1 mb-1 transition delay-500 ease hover:-translate-y-2 active:translate-y-4'
+                                                style={{fontSize:"1.25rem"}}
+                                            >
+                                                Connect Wallet
+                                            </button>
+                                        );
+                                    }}
+                                </ConnectButton.Custom>
+                            ) : nftBalance > 0 ?
+                            <span className="mt-2 text-[#000000] font-bold text-sm min-[880px]:text-base">Claimed! You have {nftBalance} Hashcase Carbon Credit NFTs</span> : <button
                                 onClick={mintNFTToWallet}
-                                className='w-full text-xl self-center bg-[#0e7490] px-2 py-4 rounded-md text-centers border-none outline-none cursor-pointer bg-white text-[#04A6E7] font-semibold mt-1 mb-1 transition delay-500 ease hover:-translate-y-2 active:translate-y-4'
+                                className='w-full text-lg min-[880px]:text-xl self-center bg-[#0e7490] px-2 py-3 min-[880px]:py-4 rounded-md text-centers border-none outline-none cursor-pointer bg-white text-[#04A6E7] font-semibold mt-1 mb-1 transition delay-500 ease hover:-translate-y-2 active:translate-y-4'
                                 style={{fontSize:"1.25rem"}}
                             >
                                 Claim NFT
                             </button>
                         }
 
-                            
-                            
-
-                                <div className="w-full flex justify-center items-center">
-                                    <button onClick={() => router.push('/apply')} className='w-full text-xl self-center bg-[#0e7490] px-2 py-4 rounded-md text-centers border-none outline-none cursor-pointer bg-white text-[#04A6E7] font-semibold mt-1 mb-3 transition delay-500 ease hover:-translate-y-2 active:translate-y-4'>
-                                        Place Order 
-                                    </button>
-                                </div>
-
                                 {/* credits corner */}
                             <Link href='https://www.hashcase.co'>
-                                <div className='mt-2 md:w-[60%] w-[80%] mx-auto self-center bg-[#0e7490] p-2 rounded-full text-white border-2 border-[#3e4eaa98] border-solid flex justify-center items-center cursor-pointer'>
-                                    Powered by {" "} 
+                                <div className='mt-2 w-[80%] min-[880px]:w-[60%] mx-auto self-center bg-[#0e7490] p-2 rounded-full text-white border-2 border-[#3e4eaa98] border-solid hidden min-[880px]:flex justify-center items-center cursor-pointer mb-4 min-[880px]:mb-0'>
+                                    Powered by {" "}
                                     <img className='h-5 ml-2 text-white' src='/images/hashcaselogo.png' alt='hashcase logo' />
                                 </div>
                             </Link>
 
                         </div>
-            
+
                     </div>
 
 
                 </div>
-                
-            </div>
-            <div className="absolute font-poppins w-full h-screen md:bg-home-background bg-[#3addf6] bg-center  md:flex md:flex-row
-            column 
-            items-stretch bg-cover relative overflow-hidden md:hidden  items-center justify-center text-centers">
-                <h1 className="font-bebas text-4xl uppercase">Please view on laptop!</h1>
+
             </div>
         </>
     );
 };
 
 export default Header;
-

@@ -28,7 +28,7 @@ const MyWallet = () => {
         try {
             const res = await axios.get(`https://api.hashcase.co/user/nfts?userAddress=${wallet_address}&collection_id=226`);
             console.log(res.data);
-            const nfts = res.data.nfts;
+            const nfts = res.data.nfts.filter((nft) => nft.name === "Greenvest CC NFT");
             setNftList(nfts);
             setNftBalance(nfts.length);
             setIsLoading(false);
@@ -47,7 +47,7 @@ const MyWallet = () => {
     return (
         <>
             <Navbar />
-            <div className="max-w-screen min-h-screen flex flex-col overflow-auto">
+            <div className="max-w-screen min-h-screen flex flex-col overflow-auto font-poppins">
                 <div className="md:w-[85%] w-[94%] mx-auto flex-col border-b-2 border-gray-300 mt-8 pb-4">
                     <div className="flex justify-between items-center">
                         <h2 className="md:text-3xl text-lg font-bold uppercase tracking-wide">

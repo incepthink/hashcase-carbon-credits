@@ -145,7 +145,7 @@ const Navbar = () => {
                 openDropdown={openDropdown}
                 anchorEl={anchorEl}
                 dispatch={dispatch}
-                onLogout={() => { logoutHandler(dispatch); if (wagmiConnected) disconnect(); }}
+                onLogout={() => { if (wagmiConnected) disconnect(); logoutHandler(dispatch); }}
             />
             <div className="flex items-center">
                 <Link
@@ -236,10 +236,10 @@ const Navbar = () => {
                             <Link
                                 href="/myWallet"
                             >
-                                <MenuItem onClick={handleClose} sx={{ fontFamily: 'Poppins', py: 1.5, px: 3 }}>My Wallet</MenuItem>
+                                <MenuItem onClick={handleClose} sx={{  py: 1.5, px: 3 }}>My Wallet</MenuItem>
                             </Link>
 
-                            <MenuItem onClick={() => { logoutHandler(dispatch); if (wagmiConnected) disconnect(); }} sx={{ fontFamily: 'Poppins', py: 1.5, px: 3 }}>Logout</MenuItem>
+                            <MenuItem onClick={() => { handleClose(); if (wagmiConnected) disconnect(); logoutHandler(dispatch); }} sx={{  py: 1.5, px: 3 }}>Logout</MenuItem>
                         </Menu>
                     </div>
                     : <div className="flex items-center ml-2 gap-3">

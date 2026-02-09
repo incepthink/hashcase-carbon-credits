@@ -13,15 +13,13 @@ const Footer = () => {
     }
   return (
     <div className='w-full flex text-white bg-[#04A6E7] flex-col font-poppins overflow-hidden p-2'>
-        <div className='hidden md:flex flex-row justify-between items-center'>
-            <Link className="flex items-center px-8 py-2 text-xl font-semibold" href="/">
-                <Image width={130} height={130} src='/images/hashcaselogo.png' alt='website logo' style={{"objectFit":"contain"}} />
-            </Link>
-        </div>
-        <Link className="md:hidden flex justify-center items-center bg-[#00000033] px-12 py-6 text-2xl font-semibold" href="/">
+        <Link className="md:hidden flex justify-center items-center bg-[#00000033] px-8 py-3 text-2xl font-semibold" href="/">
             <Image width={130} height={130} src='/images/hashcaselogo.png' alt='website logo' style={{"objectFit":"contain"}} />
         </Link>
-        <div className='flex md:flex-row flex-col justify-between items-start p-3 px-6 font-poppins'>
+        <div className='flex md:flex-row flex-col justify-between items-center p-3 px-2 font-poppins'>
+            <Link className="hidden md:flex items-center py-2 mr-6 text-xl font-semibold" href="/">
+                <Image width={130} height={130} src='/images/hashcaselogo.png' alt='website logo' style={{"objectFit":"contain"}} />
+            </Link>
             <div className='flex flex-col md:w-[25%] w-full'>
                 <div className='flex flex-row items-center my-2'>
                     <div className='rounded-full p-3 bg-[#111C55] flex items-center justify-center'>
