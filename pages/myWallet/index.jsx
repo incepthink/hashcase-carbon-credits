@@ -3,6 +3,7 @@ import { env } from "@/next.config";
 import { StoreContext } from "@/utils/Store";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
+import { useAccount } from "wagmi";
 import { BeatLoader } from "react-spinners";
 
 const MyWallet = () => {
@@ -12,79 +13,36 @@ const MyWallet = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [accountAddress, setAccountAddress] = useState("");
     const [nftBalance, setNftBalance] = useState(-1);
+    const { address: wagmiAddress } = useAccount();
 
-    const checkNFTBalanceForUser = async () => {
-        let wallet_address;
-        
-        if(state?.user?.magic_wallet){
-            wallet_address = state.user.magic_wallet;
-            setAccountAddress(state.user.magic_wallet);
-        }else if(state?.user?.wallet_address){
-            wallet_address = state.user.wallet_address;
-            setAccountAddress(state.user.wallet_address);
-        }else{
-            return;
-        }
-
-        try{
-            const config = {
-                headers: {
-                  "Content-Type": "application/json",
-                },
-            };
-        
-            axios.defaults.headers.common = {
-                "x-api-key": token,
-            };
-            const res = await axios.get(`https://api.hashcase.co/dev/checkBalanceOfNFTInWallet?wallet_address=${wallet_address}&token_id=6&collection_id=2`, config);
-            console.log(res.data);
-            setNftBalance(res.data.balance);
-        }catch(e){
-            console.log(e);
-            setNftBalance(0);
-        }
-        
-    }
-    useEffect(() => {
-        fetchNFTs();
-        checkNFTBalanceForUser();
-    }, [state.user]);
+    const getWalletAddress = () => {
+        return state?.user?.magic_wallet || state?.user?.wallet_address || wagmiAddress || null;
+    };
 
     const fetchNFTs = async () => {
-        let wallet_address;
-
-        if (state?.user?.magic_wallet) {
-            wallet_address = state.user.magic_wallet;
-        } else if (state?.user?.wallet_address) {
-            wallet_address = state.user.wallet_address;
-        } else {
-            return;
-        }
+        const wallet_address = getWalletAddress();
+        if (!wallet_address) return;
+        setAccountAddress(wallet_address);
         setIsLoading(true);
 
         try {
-            const config = {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            };
-
-            axios.defaults.headers.common = {
-                "x-api-key": token,
-            };
-            const res = await axios.get(
-                `https://api.hashcase.co/dev/getMerchListByWalletAddress?wallet_address=${wallet_address}&collection_id=2`,
-                config
-            );
+            const res = await axios.get(`https://api.hashcase.co/user/nfts?userAddress=${wallet_address}`);
             console.log(res.data);
-            setNftList(res.data.filter(val => val.id == 14));
+            const nfts = res.data.nfts;
+            setNftList(nfts);
+            setNftBalance(nfts.length);
             setIsLoading(false);
         } catch (e) {
             console.log(e);
             setNftList([]);
+            setNftBalance(0);
             setIsLoading(false);
         }
     };
+
+    useEffect(() => {
+        fetchNFTs();
+    }, [state.user, wagmiAddress]);
 
     return (
         <>
@@ -116,7 +74,7 @@ const MyWallet = () => {
                                             <img
                                                 class="rounded-t-lg object-cover w-full"
                                                 src={
-                                                    nftInfo.nft_image_url
+                                                    nftInfo.image_uri
                                                 }
                                                 alt=""
                                             />

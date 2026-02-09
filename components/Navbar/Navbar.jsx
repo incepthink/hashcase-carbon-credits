@@ -6,9 +6,11 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import { useContext, useEffect, useState } from "react"
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { useAccount, useDisconnect } from 'wagmi';
+import Cookies from 'js-cookie';
 
 
-function MobileNav({open, setOpen ,user, anchorEl, openDropdown, handleClose, handleClick,dispatch}) {
+function MobileNav({open, setOpen ,user, anchorEl, openDropdown, handleClose, handleClick,dispatch, onLogout}) {
     const router = useRouter();
     return (
         <div className={`absolute top-0 left-0 h-screen w-screen bg-gradient-to-b from-white to-gray-50 transform ${open ? "-translate-x-0" : "-translate-x-full"} transition-transform duration-300 ease-in-out shadow-2xl`}>
@@ -82,6 +84,9 @@ const Navbar = () => {
     const [userText, setUserText] = useState("Connect Wallet");
     const [open,setOpen] = useState(false);
     const router = useRouter();
+    const { address: wagmiAddress, isConnected: wagmiConnected } = useAccount();
+    const { disconnect } = useDisconnect();
+    const isUserConnected = state.user || wagmiConnected;
 
     //check if user is empty and logout if empty
     try {
@@ -122,12 +127,13 @@ const Navbar = () => {
             <MobileNav
                 open={open}
                 setOpen={setOpen}
-                user={state.user}
+                user={isUserConnected}
                 handleClick={handleClick}
                 handleClose={handleClose}
                 openDropdown={openDropdown}
                 anchorEl={anchorEl}
                 dispatch={dispatch}
+                onLogout={() => { logoutHandler(dispatch); if (wagmiConnected) disconnect(); }}
             />
             <div className="flex items-center">
                 <Link
@@ -186,7 +192,7 @@ const Navbar = () => {
                         About Us
                     </Link>
                     {
-                    state.user ?
+                    isUserConnected ?
                     <div className="flex items-center ml-2">
                         <button
                             className="bg-[#0891b2] text-white rounded-full px-6 py-2.5 font-poppins font-medium text-[15px] shadow-md hover:bg-[#0e7490] hover:scale-[1.02] transition-all duration-300"
@@ -221,7 +227,7 @@ const Navbar = () => {
                                 <MenuItem onClick={handleClose} sx={{ fontFamily: 'Poppins', py: 1.5, px: 3 }}>My Wallet</MenuItem>
                             </Link>
 
-                            <MenuItem onClick={() => {logoutHandler(dispatch)}} sx={{ fontFamily: 'Poppins', py: 1.5, px: 3 }}>Logout</MenuItem>
+                            <MenuItem onClick={() => { logoutHandler(dispatch); if (wagmiConnected) disconnect(); }} sx={{ fontFamily: 'Poppins', py: 1.5, px: 3 }}>Logout</MenuItem>
                         </Menu>
                     </div>
                     : <div className="flex items-center ml-2 gap-3">
